@@ -1,5 +1,9 @@
-import { useState } from 'react'
-import './css/App.css'
+import { useState, useEffect } from 'react';
+import TodoInput from './component/TodoInput';
+import TodoList from './component/TodoList';
+import styles from "./css/App.module.css";
+
+
 
 function App() {
   /**
