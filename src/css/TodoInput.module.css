@@ -1,0 +1,22 @@
+.form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.input {
+  flex: 1; /* 부모 컨테이너 내에서 공간을 최대한 차지 */
+  padding: 10px;
+  font-size: 16px;
+  margin-right: 10px;
+  width: 70%; /* 너비를 70%로 설정하여 늘림 */
+  max-width: 500px; /* 입력 필드의 최대 너비 */
+}
+.button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #6c9bcd;
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+}

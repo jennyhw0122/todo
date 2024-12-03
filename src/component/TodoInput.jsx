@@ -1,30 +1,30 @@
-// TodoInput.jsx
+import React, { useState } from "react";
+import styles from "../css/TodoInput.module.css";
 
-import { useState } from 'react';
+function TodoInput({ addTodo }) {
+  const [input, setInput] = useState("");
 
-const TodoInput = ({addTodo}) =>  {
-  const[ input,setInput ] = useState('');
-
-  //할 일 추가하기
-  const handleAdd = () => {
-    if ( input.trim()) {
-      addTodo(input);
-      setInput('');
-    }
-  }
-  //Enter 키 입력
-  const handleKeyDown = (e) => {
-    console.log("Pressed key:", e.key); //이벤트 객체에 대해 정리하기
-    if (e.key === "Enter") {
-      console.log("Enter key was pressed");
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!input.trim()) return; // 빈 입력 방지
+    addTodo(input); // App 컴포넌트의 addTodo 함수 호출
+    setInput(""); // 입력 필드 초기화
   };
-  
-  return (
-    <input type="text" onKeyDown={handleKeyDown} placeholder="Press any key" />
-  );
-  
-}
 
+  return (
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <input
+        type="text"
+        placeholder="내용을 작성하고, Enter 눌러주세요."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        className={styles.input}
+      />
+      <button type="submit" className={styles.button}>
+        내 맘속에 저장 🤍
+      </button>
+    </form>
+  );
+}
 
 export default TodoInput;
