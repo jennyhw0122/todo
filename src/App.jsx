@@ -36,7 +36,7 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <h1>Jenny의 Todo</h1>
+      <h1>Jenny의 Todo List</h1>
       <TodoInput addTodo={addTodo} />
       <TodoList
         todos={todos}
