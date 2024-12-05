@@ -1,4 +1,15 @@
-
+.app {
+  display: flex; /* Flexbox 사용 */
+  flex-direction: column; /* 자식 요소를 수직으로 정렬 */
+  justify-content: center; /* 수직 중앙 정렬 */
+  align-items: center; /* 수평 중앙 정렬 */
+  height: 100vh; /* 부모 컨테이너를 화면 전체 높이로 설정 */
+  width: 100vw; /* 부모 컨테이너를 화면 전체 너비로 설정 */
+  margin: 0; /* 기본 여백 제거 */
+  padding: 0;
+  text-align: center; /* 텍스트를 중앙 정렬 */
+  box-sizing: border-box; /* 전체 컨테이너의 박스 모델을 조정 */
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;

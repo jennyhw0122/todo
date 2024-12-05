@@ -1,18 +1,62 @@
-.list {
-  display: flex; /* 가로 정렬 */
-  flex-wrap: wrap; /* 줄바꿈 가능 */
-  gap: 15px; /* 카드 간격 */
-  justify-content: center; /* 카드 중앙 정렬 */
-  padding: 20px;
-  margin: 0;
-  list-style-type: none; /* 기본 점 제거 */
+.listItem {
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  align-items: flex-start; /* 항목들을 왼쪽 정렬 */
+  justify-content: space-between;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
 }
 
-
-
-.emptyMessage {
-  font-size: 18px;
-  color: #8f8f8f;
-  text-align: center;
-  margin-top: 20px;
+.todoHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
+
+.todoText {
+  flex: 1;
+  margin-left: 10px;
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.todoText.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.completedAt {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px; /* 버튼 간격 추가 */
+  justify-content: flex-end; /* 버튼들을 오른쪽 정렬 */
+  width: 100%;
+}
+
+.todoButton {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.todoButton:hover {
+  background-color: #e0e0e0;
+}
+
+.checkbox {
+  transform: scale(1.5);
+  margin-right: 10px;
+}
+
