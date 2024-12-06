@@ -1,34 +1,52 @@
-.item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 15px 20px;
-  width: 200px; /* 카드 너비 고정 */
-  height: 100px; /* 카드 높이 고정 */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 카드 그림자 */
-  flex-direction: column; /* 내용 세로 정렬 */
+.todoRow {
+  text-align: center;
 }
 
-.item:hover {
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+.editInput {
+  width: 80%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+.editButton,
+.saveButton {
+  padding: 5px 10px;
+  margin: 0 5px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.editButton {
+  background-color: #3d4d9f;
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #3d4d9f;
+}
+
+.saveButton {
+  background-color: #3d4d9f;
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #3d4d9f;
 }
 
 .deleteButton {
-  padding: 5px 10px;
-  background-color: #98b1d0;
+  background-color: #9e535b;
   color: white;
+  padding: 5px 10px;
   border: none;
-  cursor: pointer;
-  font-size: 14px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
-span {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
-  cursor: pointer;
+.deleteButton:hover {
+  background-color: #9b4c54;
 }

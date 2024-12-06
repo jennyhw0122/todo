@@ -1,33 +1,49 @@
 import React from "react";
-import styles from "../css/TodoList.module.css";
+import PropTypes from "prop-types";
+import styles from "../css/TodoInput.module.css";
 
 function TodoInput({ newTodo, setNewTodo, addTodo }) {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault();
-      if (!newTodo.trim()) {
-        alert("내용을 입력해주세요!");
-        return;
+      e.preventDefault(); // 기본 Enter 동작 방지
+      if (newTodo.trim()) {
+        addTodo(); // 입력값이 있으면 추가
+      } else {
+        alert("할 일을 입력해 주세요!"); // 입력값이 없으면 알림
       }
-      addTodo();
     }
   };
 
   return (
-    <div className={styles.inputContainer}>
+    <div className={styles.container}>
       <input
         type="text"
         value={newTodo}
-        placeholder="오늘 할 일을 입력해쥬!"
         onChange={(e) => setNewTodo(e.target.value)}
-        onKeyDown={handleKeyDown}
-        className={styles.inputField}
+        onKeyDown={handleKeyDown} // Enter 키 이벤트 처리
+        placeholder="오늘 해야 할 일을 입력하세요!"
+        className={styles.todoInput}
       />
-      <button onClick={addTodo} className={styles.todoButton}>
-        내 맘속에 저장🤍
+      <button
+        onClick={() => {
+          if (newTodo.trim()) {
+            addTodo(); // 입력값이 있으면 추가
+          } else {
+            alert("할 일을 입력해 주세요!"); // 입력값이 없으면 알림
+          }
+        }}
+        className={styles.addButton}
+      >
+        할 일 등록
       </button>
     </div>
   );
 }
+
+TodoInput.propTypes = {
+  newTodo: PropTypes.string.isRequired,
+  setNewTodo: PropTypes.func.isRequired,
+  addTodo: PropTypes.func.isRequired,
+};
 
 export default TodoInput;

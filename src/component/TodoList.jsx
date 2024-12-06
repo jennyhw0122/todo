@@ -1,68 +1,32 @@
-import React from "react";
+import TodoItem from "./TodoItem";
 import styles from "../css/TodoList.module.css";
 
-function TodoList({
-  todos,
-  toggleComplete,
-  deleteTodo,
-  startEditing,
-  saveEdit,
-  editingId,
-  editText,
-  setEditText,
-}) {
+// eslint-disable-next-line react/prop-types
+function TodoList({ todos, toggleComplete, deleteTodo, updateTodo }) {
   return (
-    <ul>
-      {todos.map((todo) => (
-        <li key={todo.id} className={styles.listItem}>
-          {editingId === todo.id ? (
-            <>
-              <input
-                type="text"
-                value={editText}
-                onChange={(e) => setEditText(e.target.value)}
-                className={styles.inputField}
-              />
-              <button onClick={() => saveEdit(todo.id)} className={styles.todoButton}>
-                저장
-              </button>
-            </>
-          ) : (
-            <>
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => toggleComplete(todo.id)}
-                className={styles.checkbox}
-              />
-              <span
-                className={styles.todoText}
-                style={{
-                  textDecoration: todo.completed ? "line-through" : "none",
-                }}
-              >
-                {todo.text}
-              </span>
-              {todo.completed && todo.completedAt && (
-                <span className={styles.completedAt}>
-                  완료: {todo.completedAt}
-                </span>
-              )}
-              <button
-                onClick={() => startEditing(todo.id, todo.text)}
-                className={styles.todoButton}
-              >
-                수정
-              </button>
-              <button onClick={() => deleteTodo(todo.id)} className={styles.todoButton}>
-                삭제
-              </button>
-            </>
-          )}
-        </li>
-      ))}
-    </ul>
+    <table className={styles.todoTable}>
+      <thead>
+        <tr>
+          <th>완료</th>
+          <th>오늘 나의 작업</th>
+          <th>완료 시간</th>
+          <th>작업</th>
+        </tr>
+      </thead>
+      <tbody>
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id} // 고유 ID로 키 지정
+            todo={todo} // 개별 할 일 객체 전달
+            toggleComplete={toggleComplete} // 완료 상태 토글 함수 전달
+            deleteTodo={deleteTodo} // 삭제 함수 전달
+            updateTodo={updateTodo} // 수정 함수 전달
+          />
+        ))}
+      </tbody>
+    </table>
   );
 }
 
 export default TodoList;
+

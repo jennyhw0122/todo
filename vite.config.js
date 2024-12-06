@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/todo/' // 리포지토리 이름에 맞게 설정
+  base: '/todo/'  // GitHub 리포지토리 이름으로 변경
 });

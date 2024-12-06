@@ -1,17 +1,72 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import TodoInput from "./component/TodoInput";
 import TodoList from "./component/TodoList";
 import styles from "./css/App.module.css";
 
+// 리듀서 함수 정의
+const todoReducer = (state, action) => {
+  const dayOption = {
+    year: "2-digit",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+
+  switch (action.type) {
+    case "ADD_TODO":
+      return [
+        ...state,
+        {
+          id: Date.now(),
+          time: new Date().toLocaleString("ko-KR", dayOption),
+          text: action.payload,
+          completed: false,
+          completedAt: null,
+        },
+      ];
+    case "TOGGLE_TODO":
+      return state.map((todo) =>
+        todo.id === action.payload
+          ? {
+              ...todo,
+              completed: !todo.completed,
+              completedAt: !todo.completed
+                ? new Date().toLocaleString("ko-KR", { hour: "2-digit", minute: "2-digit" })
+                : null,
+            }
+          : todo
+      );
+    case "DELETE_TODO":
+      return state.filter((todo) => todo.id !== action.payload);
+    case "UPDATE_TODO":
+      return state.map((todo) =>
+        todo.id === action.payload.id
+          ? { ...todo, text: action.payload.newText }
+          : todo
+      );
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
+};
+
 function App() {
-  const [todos, setTodos] = useState(() => {
+  const getInitialTodos = () => {
     const storedTodos = localStorage.getItem("todos");
     return storedTodos ? JSON.parse(storedTodos) : [];
-  });
+  };
 
+  const [todos, dispatch] = useReducer(todoReducer, getInitialTodos());
   const [newTodo, setNewTodo] = useState("");
-  const [editingId, setEditingId] = useState(null); // 현재 수정 중인 ID
-  const [editText, setEditText] = useState(""); // 수정 중인 텍스트
+  const [filter, setFilter] = useState("all");
+
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "completed") return todo.completed;
+    if (filter === "incomplete") return !todo.completed;
+    return true;
+  });
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -19,71 +74,61 @@ function App() {
 
   const addTodo = () => {
     if (!newTodo.trim()) {
-      alert("내용을 입력해쥬!");
+      alert("할 일을 입력해쥬~!");
       return;
     }
-    const newTask = {
-      id: Date.now(),
-      text: newTodo.trim(),
-      completed: false,
-      completedAt: null,
-    };
-    setTodos([...todos, newTask]);
+    dispatch({ type: "ADD_TODO", payload: newTodo });
     setNewTodo("");
   };
 
   const toggleComplete = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              completed: !todo.completed,
-              completedAt: !todo.completed
-                ? `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`
-                : null,
-            }
-          : todo
-      )
-    );
+    dispatch({ type: "TOGGLE_TODO", payload: id });
   };
 
   const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    dispatch({ type: "DELETE_TODO", payload: id });
   };
 
-  const startEditing = (id, currentText) => {
-    setEditingId(id); // 수정 중인 ID 설정
-    setEditText(currentText); // 현재 텍스트를 수정 텍스트로 설정
-  };
-
-  const saveEdit = (id) => {
-    if (!editText.trim()) {
-      alert("수정할 내용을 입력해주세요!");
-      return;
-    }
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, text: editText.trim() } : todo
-      )
-    );
-    setEditingId(null); // 수정 모드 종료
-    setEditText(""); // 수정 텍스트 초기화
+  const updateTodo = (id, newText) => {
+    dispatch({ type: "UPDATE_TODO", payload: { id, newText } });
   };
 
   return (
     <div className={styles.app}>
-      <h1>Jenny의 Todo List</h1>
+      {/* 최상위 컨테이너에 styles.app 클래스 적용 */}
+      <h1 className={styles.title}>Jenny의 Todo List</h1>
+
+      {/* 필터 버튼 */}
+      <div className={styles.filterButtons}>
+        <button
+          onClick={() => setFilter("all")}
+          className={styles.filterButton}
+        >
+          전체
+        </button>
+        <button
+          onClick={() => setFilter("completed")}
+          className={styles.filterButton}
+        >
+          완료
+        </button>
+        <button
+          onClick={() => setFilter("incomplete")}
+          className={styles.filterButton}
+        >
+          미완료
+        </button>
+      </div>
+
+      {/* TodoInput 컴포넌트 */}
       <TodoInput newTodo={newTodo} setNewTodo={setNewTodo} addTodo={addTodo} />
+
+      {/* TodoList 컴포넌트 */}
       <TodoList
-        todos={todos}
+        todos={filteredTodos}
         toggleComplete={toggleComplete}
         deleteTodo={deleteTodo}
-        startEditing={startEditing}
-        saveEdit={saveEdit}
-        editingId={editingId}
-        editText={editText}
-        setEditText={setEditText}
+        updateTodo={updateTodo}
       />
     </div>
   );
