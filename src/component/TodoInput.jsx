@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styles from "../css/TodoInput.module.css";
 // Ant Design Icons
-import { PlusOutlined, EditOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 
 function TodoInput({ newTodo, setNewTodo, addTodo }) {
   /**
