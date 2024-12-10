@@ -1,52 +1,66 @@
-.todoRow {
-  text-align: center;
+.todoItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px 0 ; /* 요소 간 여백 조정 */
+  padding: 10px; /* 내부 여백 추가 */
+  border-radius: 5px; /* 둥근 모서리 */
+  transition: background-color 0.2s ease; /* 부드러운 배경 전환 */
+}
+
+.todoItem:hover {
+  background-color: #f8f9fa; /* 호버 시 배경색 */
+}
+
+.checkbox {
+  margin-right: 10px;
+}
+
+.todoText {
+  flex: 1; /* 남은 공간 차지 */
+  font-size: 16px;
+  color: #37495a; /* 기본 텍스트 색상 */
+}
+
+.todoText.completed {
+  text-decoration: line-through; /* 완료된 작업에 줄 긋기 */
+  color: #a0a4a8; /* 완료된 텍스트 색상 */
 }
 
 .editInput {
-  width: 80%;
+  flex: 1;
   padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .editButton,
-.saveButton {
-  padding: 5px 10px;
-  margin: 0 5px;
-  font-size: 0.9rem;
+.deleteButton {
+  background: none;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  margin-left: 10px; /* 버튼 간 간격 */
+  font-size: 16px; /* 버튼 크기 */
 }
 
 .editButton {
-  background-color: #3d4d9f;
-  color: white;
+  color: #5852c8; /* 수정 버튼 색상 */
 }
 
 .editButton:hover {
-  background-color: #3d4d9f;
-}
-
-.saveButton {
-  background-color: #3d4d9f;
-  color: white;
-}
-
-.saveButton:hover {
-  background-color: #3d4d9f;
+  color: #3c46a8; /* 수정 버튼 호버 색상 */
 }
 
 .deleteButton {
-  background-color: #9e535b;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  color: #c46d67; /* 삭제 버튼 색상 */
 }
 
 .deleteButton:hover {
-  background-color: #9b4c54;
+  color: #a33d3d; /* 삭제 버튼 호버 색상 */
+}
+
+.completedTime {
+  font-size: 0.9rem;
+  color: #6c757d; /* 중립적인 색상 */
+  margin-left: 10px; /* 텍스트 간격 */
 }

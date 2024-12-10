@@ -1,23 +1,34 @@
-import PropTypes from "prop-types";
+// TodoInput.jsx
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import styles from "../css/TodoInput.module.css";
-// Ant Design Icons
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from '@ant-design/icons';
 
-function TodoInput({ newTodo, setNewTodo, addTodo }) {
+const TodoInput = ({ addTodo }) => {
+  const [input, setInput] = useState('');
+
   /**
-   * Enter 키를 눌렀을 때 처리
-   * - 입력값이 있으면 할 일을 추가
-   * - 입력값이 없으면 경고 표시
+   * 입력값을 추가하는 함수
+   * - 입력값이 없으면 경고 메시지 표시
+   * - 입력값이 있으면 addTodo 호출 후 입력 필드 초기화
+   */
+  const handleAdd = () => {
+    if (input.trim()) {
+      addTodo(input); // 부모 컴포넌트로 입력값 전달
+      setInput(''); // 입력 필드 초기화
+    } else {
+      alert("할 일을 입력해 주세요!"); // 입력값이 없으면 경고 표시
+    }
+  };
+
+  /**
+   * Enter 키 입력 감지
+   * - MacOS에서 한글 입력 중 Enter 입력 처리 방지 (229 키코드)
+   * - Enter 입력 시 handleAdd 호출
    */
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); // 기본 Enter 동작 방지
-      if (newTodo.trim()) {
-        addTodo(); // 입력값이 있으면 추가
-      } else {
-        alert("할 일을 입력해 주세요!"); // 입력값이 없으면 알림
-      }
-    }
+    if (e.keyCode === 229) return; // 한글 입력 중 중복 호출 방지
+    if (e.key === 'Enter') handleAdd(); // Enter 키 입력 시 추가
   };
 
   return (
@@ -25,34 +36,18 @@ function TodoInput({ newTodo, setNewTodo, addTodo }) {
       {/* 입력 필드 */}
       <input
         type="text"
-        value={newTodo} // 부모 컴포넌트로부터 받은 상태값
-        onChange={(e) => setNewTodo(e.target.value)} // 상태 업데이트
-        onKeyDown={handleKeyDown} // Enter 키 이벤트 처리
-        placeholder="오늘 해야 할 일을 입력하세요!"
+        value={input} // 입력값 상태
+        onChange={(e) => setInput(e.target.value)} // 상태 업데이트
+        onKeyDown={handleKeyDown} // Enter 키 입력 감지
+        placeholder="오늘 해야 할 일을 입력해주세요 💬" // 안내 텍스트
         className={styles.todoInput}
       />
       {/* 추가 버튼 */}
-      <button
-        onClick={() => {
-          if (newTodo.trim()) {
-            addTodo(); // 입력값이 있으면 추가
-          } else {
-            alert("할 일을 입력해 주세요!"); // 입력값이 없으면 알림
-          }
-        }}
-        className={styles.addButton}
-      >
-        <PlusOutlined className={styles.addIcon} /> {/* 추가 아이콘 */}
-        등록
+      <button onClick={handleAdd} className={styles.addButton}>
+        <PlusOutlined className={styles.addIcon} aria-label="Add Todo" /> {/* 아이콘 추가 */}
       </button>
     </div>
   );
-}
-
-TodoInput.propTypes = {
-  newTodo: PropTypes.string.isRequired, // 입력된 할 일 값
-  setNewTodo: PropTypes.func.isRequired, // 입력 값을 업데이트하는 함수
-  addTodo: PropTypes.func.isRequired, // 할 일을 추가하는 함수
 };
 
 export default TodoInput;

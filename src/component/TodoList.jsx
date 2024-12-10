@@ -1,7 +1,7 @@
-import TodoItem from "./TodoItem";
-import styles from "../css/TodoList.module.css";
-
 // eslint-disable-next-line react/prop-types
+import styles from "../css/TodoList.module.css"; // CSS 파일 가져오기
+import TodoItem from "./TodoItem";
+
 function TodoList({ todos, toggleComplete, deleteTodo, updateTodo }) {
   return (
     <table className={styles.todoTable}>
@@ -29,4 +29,3 @@ function TodoList({ todos, toggleComplete, deleteTodo, updateTodo }) {
 }
 
 export default TodoList;
-
